@@ -1,14 +1,70 @@
 import colores.*
+import direcciones.*
+import wollok.game.*
 
 //Clase, porque habrá varios
 class ChevyCorsa {
 	//Sin inicializar porque debe especificarse al instanciar
 	//Property porque necesito el método de consulta color()
-	const property color
+	var property color
+	var property position
+	var anteriorPosicion = null
+	var ultimaDireccion = null
+	var union = sur
+	var interseccion = oeste
+	
+	const posicionesRecorridas = []
 	
 	method capacidad() = 4
 	method peso() = 1300
 	method velocidadMaxima() = 150
+	method image() = color.image()
+
+	// Game
+	
+	method agregarPosicionRecorrida(posicion) { posicionesRecorridas.add(posicion)}
+	method pasoPor(posicion) = posicionesRecorridas.contains(posicion)
+	method pasoPorFila(numero) = posicionesRecorridas.any({ p => p.truncate(0) == numero }) 
+	method recorrioFilas(listaDeNumeros) = posicionesRecorridas.all({ p => self.pasoPorFila(p)})
+	method estaEn(region) = union == region
+
+	// Movimientos Game
+
+	method moverA(nuevaPosicion) {
+		anteriorPosicion = position // Guardo la posicion
+		position = nuevaPosicion
+	}
+    method regresarAAnteriorPosicion() {
+        position = anteriorPosicion
+    }
+	
+	method moverseNorte() { self.moverA(position.up(1)) }
+    method moverseSur() { self.moverA(position.down(1)) }
+    method moverseOeste() { self.moverA(position.left(1)) }
+    method moverseEste() { self.moverA(position.right(1)) }
+
+	// Direcciones
+
+	method moverseA(direccion) {
+		anteriorPosicion = position 
+		if (direccion == norte) {
+			self.moverseNorte()
+			union = direccion
+		}
+		else if (direccion == sur) {
+			self.moverseSur()
+			union = direccion
+		}
+		else if (direccion == este) {
+			self.moverseEste()
+			interseccion = direccion
+		}
+		else if (direccion == oeste) {
+			self.moverseOeste()
+			interseccion = direccion
+		}
+	}
+	method repetirUltimoMovimiento() { self.moverseA(ultimaDireccion) }
 }
 
 //Clase, porque habrá varios

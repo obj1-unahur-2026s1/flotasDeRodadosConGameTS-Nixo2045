@@ -1,0 +1,61 @@
+import wollok.game.*
+import rodados.*
+import colores.*
+import pared.*
+
+program ChevyGame {
+	game.title("El Chevy de Pepe")
+	game.height(10)
+	game.width(10)
+	game.boardGround("paredes.jpg")
+	
+	// Autos
+
+	const chevy1 = new ChevyCorsa(color = rojo, position = game.at(3,4))
+	const chevy2 = new ChevyCorsa(color = rojo, position = game.at(4,5))
+	const chevy3 = new ChevyCorsa(color = rojo, position = game.at(5,6))
+	var autoActual = chevy1
+	game.addVisual(chevy1)
+	game.addVisual(chevy2)
+	game.addVisual(chevy3)
+
+	// Paredes
+	
+	const pared1 = new Pared( resistencia = 5, position = game.at(0,0) )
+	const pared2 = new Pared( resistencia = 0, position = game.at(0,9) )
+	const pared3 = new Pared( resistencia = 1, position = game.at(9,0) )
+	const pared4 = new Pared( resistencia = 3, position = game.at(9,9) )
+
+	const paredes = [pared1, pared2, pared3, pared4]
+	paredes.forEach({ pared => game.addVisual(pared)})
+
+	// Colision de AUTO con PARED
+
+	game.onCollideDo(autoActual, {
+		obstaculo => obstaculo.recibirChoque();
+		if (obstaculo.resistencia() > 0) {
+			autoActual.regresarAAnteriorPosicion()
+		}
+	})
+	
+	// Cambio de Colores
+	
+	keyboard.a().onPressDo({ autoActual.color(azul) })
+	keyboard.r().onPressDo({ autoActual.color(rojo) })
+	keyboard.v().onPressDo({ autoActual.color(verde) })
+
+	// Cambio de auto
+
+	keyboard.num1().onPressDo({ autoActual = chevy1 })
+	keyboard.num2().onPressDo({ autoActual = chevy2 })
+	keyboard.num3().onPressDo({ autoActual = chevy3 })
+
+	// Movimientos del Auto
+
+    keyboard.up().onPressDo({ autoActual.moverseNorte() })
+    keyboard.down().onPressDo({ autoActual.moverseSur() })
+    keyboard.left().onPressDo({ autoActual.moverseOeste() })
+    keyboard.right().onPressDo({ autoActual.moverseEste() })
+
+	game.start()
+}
