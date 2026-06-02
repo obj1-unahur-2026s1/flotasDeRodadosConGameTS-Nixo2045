@@ -18,7 +18,6 @@ class Dependencia {
 	method capacidadTotalDeFlota() = flotaDeRodados.sum({ r => r.capacidad() })
 	method esGrande() = cantidadDeEmpleados >= 40 and flotaDeRodados.size() >= 5
 
-
 	//Para pedidos
 	method agregarPedido(pedido) { pedidos.add(pedido) }
 	method agregarPedidos(listaDePedidos) { pedidos.addAll(listaDePedidos) } //No lo especifica el enunciado, pero para agilizar
