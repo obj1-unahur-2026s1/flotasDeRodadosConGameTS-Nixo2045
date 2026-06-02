@@ -57,5 +57,6 @@ program ChevyGame {
     keyboard.left().onPressDo({ autoActual.moverseOeste() })
     keyboard.right().onPressDo({ autoActual.moverseEste() })
 
-	game.start()
+	game.start()     
+	
 }

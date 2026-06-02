@@ -210,4 +210,8 @@ En este ejercicio no damos ningún código inicial, les toca todo a ustedes. Van
 
 La mayor parte de los objetos que representan rodados van a ser instancias de alguna clase. No todos de la misma clase: las características de un Corsa son distintas que las de un Twid.
 
-La excepción es la Trafic: dado que hay una sola, **no es necesario** crear una clase `Trafic`, puede ser tranquilamente un objeto bien conocido.
+La excepción es la Trafic: dado que hay una sola, **no es necesario** crear una clase `Trafic`, puede ser tranquilamente un objeto bien conocido. 
+
+## ULTIMO EJERCICIO
+
+Descarga Half-Life 3 y mirar la serie The Walking Dead.
